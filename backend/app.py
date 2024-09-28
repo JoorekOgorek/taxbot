@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, Response
 
 app = Flask(__name__)
 
@@ -21,3 +21,18 @@ def handle_api():
     else:
         # Handle cases where JSON is not provided
         return jsonify({"error": "Invalid JSON data"}), 400
+
+@app.route('/taxform.xml')
+def get_xml():
+    xmlstring = """<?xml version="1.0" encoding="UTF-8"?>
+<note>
+  <to>Tove</to>
+  <from>Jani</from>
+  <heading>Reminder</heading>
+  <body>Don't forget me this weekend!</body>
+</note>"""
+
+    r = Response(response=xmlstring, status=200, mimetype='text/xml')
+    # r.headers["Content-Type"] = "text/xml; charset=utf-8"
+    return r
+

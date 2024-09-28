@@ -52,7 +52,7 @@ inputForm.addEventListener('submit', async function(event) {
   // Add user input to conversation
   let message = document.createElement('div');
   message.classList.add('chatbot-message', 'user-message');
-  message.innerHTML = `<p class="chatbot-text" sentTime="${currentTime}">${input}</p>`;
+  message.innerHTML = `<p class="chatbot-text" style="background: #eeeeff;" sentTime="${currentTime}">${input}</p>`;
   conversation.appendChild(message);
 
   // Generate chatbot response
@@ -71,7 +71,7 @@ inputForm.addEventListener('submit', async function(event) {
   // Add chatbot response to conversation
   message = document.createElement('div');
   message.classList.add('chatbot-message','chatbot');
-  message.innerHTML = `<p class="chatbot-text" sentTime="${currentTime}">${(response["serverMessage"])}</p>`;
+  message.innerHTML = `<p class="chatbot-text" style="background: #eeffee;" sentTime="${currentTime}">${(response["serverMessage"])}</p>`;
   conversation.appendChild(message);
   message.scrollIntoView({behavior: "smooth"});
 });

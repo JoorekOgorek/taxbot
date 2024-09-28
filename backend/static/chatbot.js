@@ -3,7 +3,7 @@ const chatbot = document.getElementById('chatbot');
 const conversation = document.getElementById('conversation');
 const inputForm = document.getElementById('input-form');
 const inputField = document.getElementById('input-field');
-
+const sendButton = document.getElementById('submit-button');
 
 async function sendJsonRequest(url, data) {
   try {
@@ -15,6 +15,11 @@ async function sendJsonRequest(url, data) {
       },
       body: JSON.stringify(data), // Converts JavaScript object to a JSON string
     });
+
+    inputField.disabled = true;
+    sendButton.disabled = true;
+    inputField.value = "Proszę czekać, generowanie odpowiedzi..."
+
 
     // Wait for the JSON response
     const result = await response.json();
@@ -28,7 +33,7 @@ async function sendJsonRequest(url, data) {
   }
 }
 
-sendJsonRequest('https://example.com/api', { key1: 'value1', key2: 'value2' });
+// sendJsonRequest('https://example.com/api', { key1: 'value1', key2: 'value2' });
 
 
 
@@ -55,7 +60,13 @@ inputForm.addEventListener('submit', async function(event) {
 
   response = await sendJsonRequest('/api', { userMessage: input });
 
+  //await (new Promise(resolve => setTimeout(resolve, 1000)));
 
+
+  inputField.disabled = false;
+  sendButton.disabled = false;
+  inputField.value = ""
+  inputField.focus();
 
   // Add chatbot response to conversation
   message = document.createElement('div');

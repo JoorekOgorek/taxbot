@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-
+import model_api
 app = Flask(__name__)
 
 @app.route('/')
@@ -12,10 +12,13 @@ def handle_api():
         # Parse the JSON data
         data = request.get_json()
         userMessage = data["userMessage"]
+        print(userMessage)
 
+        ollama_response = model_api.run_ollama(userMessage)
         # Handle the data (for example, just return it)
+        print(ollama_response)
         response = {
-            "serverMessage": "You just sent me " + str(userMessage)
+            "serverMessage": ollama_response
         }
         return jsonify(response), 200
     else:

@@ -5,7 +5,7 @@ import prompts
 main_model = "bielik:collect"
 # main_model = "codellama:latest"
 
-llm = Ollama(model=main_model, request_timeout=60)
+llm = Ollama(model=main_model, request_timeout=600)
 next_prompt = "intro"
 # next_prompt = "yes"  #unlock to skip 1 steps
 generated_xml = ""
@@ -24,7 +24,7 @@ def send_prompt(user_question):
         return response
 
     if next_prompt == "yesno":
-        llm = Ollama(model=main_model, request_timeout=60)
+        llm = Ollama(model=main_model, request_timeout=600)
         response = run_ollama(question=user_question, system_prompt=prompts.yesno)
         print( response)
         response = remove_special_characters(response.lower().replace("assistant:", "").strip())
@@ -54,7 +54,7 @@ def send_prompt(user_question):
 
     if next_prompt == "name_validateion":
         # Validate name
-        llm.request_timeout =120*2
+        llm.request_timeout =600
         print(f"name: {name}")
         response = run_ollama(question=f"generuj plik xml, uwzględniając podane dane. Imie i nazwisko Podmiot1: {name}", system_prompt=prompts.data_xml_generation)
         # response = validate_name(response)
@@ -63,30 +63,6 @@ def send_prompt(user_question):
         response = '<a href="/taxform.xml">link text</a>'
         next_prompt = "no"
         return response
-
-#
-# def data_validation(user_question):
-#     messages = [
-#         ChatMessage(
-#             role="system",
-#             content=prompts.data_collection
-#         ),
-#         ChatMessage(role="user", content=user_question),
-#     ]
-#     response = llm.chat(messages)
-#     return response.__str__()
-#
-#
-# def data_collection(user_question):
-#     messages = [
-#         ChatMessage(
-#             role="system",
-#             content=prompts.data_collection
-#         ),
-#         ChatMessage(role="user", content=user_question),
-#     ]
-#     response = llm.chat(messages)
-#     return response.__str__()
 
 
 def run_ollama(question, system_prompt):
